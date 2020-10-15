@@ -1,0 +1,47 @@
+<FirstPage>:
+    GridLayout:
+        cols: 1
+        FloatLayout:
+            GridLayout:
+                canvas:
+                    Color:
+                        rgba: 0.531,0.5546,0.6172,1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                rows: 1
+                pos_hint: {"top": 1, "left": 1}
+                size_hint: 1, .1
+                Image:
+                    source: "figs/legec_logo2.png"
+                    id: avatar_image
+                    size_hint: 0.5, 0.7
+                    pos_hint: {"top": 1, "right": 0.75}
+                Image:
+                    source: "figs/craca_logo.png"
+                    size_hint: 0.25,0.55
+                    pos_hint: {"top": 1, "right": 0.45}
+                Image:
+                    source: "figs/ostra_logo.png"
+                    size_hint: 0.25, 0.55
+                    pos_hint: {"top": 1, "right": 0.8}
+                Image:
+                    size_hint: 0.25,0.55
+                    source: "figs/alga_logo.png"
+
+            ScreenManager:
+                size_hint: 1, 0.899
+                pos_hint: {"top": .899, "left": 1}
+                id: screen_manager
+                LoginPage:
+                    name: "login_screen"
+                    id: login_screen
+                LocalColeta:
+                    name: "localcoleta"
+                    id: localcoleta
+                Transectos:
+                    name: "trans"
+                    id: trans
+                Camera01:
+                    name:'camera01'
+                    id:camera01

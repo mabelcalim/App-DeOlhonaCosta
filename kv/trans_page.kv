@@ -1,0 +1,266 @@
+<Trans>:
+    canvas:
+        Color:
+            rgba: 0.531,0.5546,0.6172,1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    GridLayout:
+        #cols:2
+        #spacing: 50,50
+        #padding: 60, 60
+        size_hint_y: None
+        height: self.minimum_height
+        rows: 1
+        size_hint: 1, .2
+        pos_hint: {"top": 1.03, "right": 1}
+        Label:
+            id: trans_id
+            text: "trans01"
+            size_hint:1,.05
+            pos_hint: {"top": 1.03, "right": 1}
+
+
+
+    FloatLayout:
+        Label:
+            text: "Extensão do Transecto"
+            size_hint: 1, .05
+            pos_hint: {"top": .93, "right": 1}
+        GridLayout:
+            rows: 1
+            size_hint: 1, .05
+            pos_hint: {"top": 0.88, "right": 1}
+            TextInput:
+                id: trans_sup
+                size_hint: .2, .1
+                pos_hint: {"top": .35, "right": .4}
+                hint_text: "0.0 cm "
+                on_text:
+                    self.background_color = (1,1,1,1)
+            TextInput:
+                id: trans_inf
+                size_hint: .2, .1
+                pos_hint: {"top": .35, "right": .4}
+                hint_text: "276 cm "
+                on_text:
+                    self.background_color = (1,1,1,1)
+        Label:
+            text: "Selecione o organismo dominante"
+            size_hint: 1, .05
+            pos_hint: {"top": 0.8, "right": 1}
+
+        GridLayout:
+            #cols:3
+            #spacing: 50,50
+            #padding: 60, 60
+            size_hint_y: None
+            height: self.minimum_height
+            rows: 1
+            size_hint: 1, .2
+            pos_hint: {"top": .75, "right": 1}
+            row_default_height: '150dp'
+            #row_force_default: True
+
+            ImageButton:
+                id:trans_craca
+                source:"org/legec_craca.png"
+                size_hint: .8, .8
+                #pos_hint: {"top": .5, "right" :1.2 }
+                on_press: root.new_craca()
+                on_release:root.label_craca()
+            ImageButton:
+                id:trans_ostra
+                source:"org/legec_ostra.png"
+                size_hint: .8, .8
+                #pos_hint: {"top": .5, "right" :1.2 }
+                on_press: root.new_ostra()
+                on_release: root.label_ostra()
+            ImageButton:
+                id:trans_alga
+                source:"org/legec_alga.png"
+                size_hint: .8, .8
+                #pos_hint: {"top": .5, "right" :1.2 }
+                on_press: root.new_alga()
+                on_release: root.label_alga()
+
+                #ImageButton:
+                #    id:camera
+                #    source:"figs/camera.png"
+                #    size_hint: 3, 3
+                #    pos_hint: {"top": .5, "right" :1 }
+                #    on_press: self.color = (0,0,0,1)
+                #    on_release:app.root.current = 'camera01'
+
+
+
+        Label:
+            text: "Extensão das faixas de organismos (cm)"
+            size_hint: 1, .05
+            pos_hint: {"top": 0.48, "right": 1}
+
+
+        GridLayout:
+            rows: 1
+            size_hint: 1, .05
+            pos_hint: {"top": .4, "right": 1}
+            Label:
+                color: (1,1,1,1)
+                font_size:34
+                id: trans_craca_label
+            TextInput:
+                size_hint: 1.5, 1
+                pos_hint: {"top": .15, "right": 1.2}
+                hint_text: "inicial (cm)"
+                id: trans_fx1_sup
+                on_text:
+                    self.background_color = (1,1,1,1)
+            TextInput:
+                size_hint: 1.5, 1
+                pos_hint: {"top": .15, "right": 1.2}
+                hint_text: "final (cm)"
+                id: trans_fx1_inf
+                on_text:
+                    self.background_color = (1,1,1,1)
+            ImageButton:
+                id:camera_craca
+                source:"figs/camera.png"
+                size_hint: 1, 1
+                pos_hint: {"top": .15, "right" :1 }
+                #on_release:app.root.current = 'faixa1'
+                #on_press: self.color = (0,0,0,1)
+                #on_press: app.check_camera_permission()
+                on_press:root.change_fx('faixa01')
+                on_release: app.change_screen("camera01")
+
+            ImageButton:
+                id:conta
+                source:"figs/contagem.png"
+                size_hint: 1, 1
+                pos_hint: {"top": .15, "right" :1 }
+                on_release: app.change_screen("fx1")
+        GridLayout:
+            rows: 1
+            size_hint: 1, .05
+            pos_hint: {"top": .3, "right": 1}
+            Label:
+                color: (1,1,1,1)
+                font_size:34
+                id: trans_ostra_label
+            TextInput:
+                size_hint: 1.5, 1
+                pos_hint: {"top": .15, "right": 1.2}
+                hint_text: "inicial (cm)"
+                id: trans_fx2_sup
+                on_text:
+                    self.background_color = (1,1,1,1)
+            TextInput:
+                size_hint: 1.5, 1
+                pos_hint: {"top": .15, "right": 1.2}
+                hint_text: "final (cm)"
+                id: trans_fx2_inf
+                on_text:
+                    self.background_color = (1,1,1,1)
+            ImageButton:
+                id:camera
+                source:"figs/camera.png"
+                size_hint: 1, 1
+                pos_hint: {"top": .15, "right" :1 }
+                #on_press: self.color = (0,0,0,1)
+                on_press:root.change_fx('faixa02')
+                on_release: app.change_screen("camera01")
+            ImageButton:
+                id:conta
+                source:"figs/contagem.png"
+                size_hint: 1, 1
+                pos_hint: {"top": .15, "right" :1 }
+                #on_press: self.color = (0,0,0,1)
+                on_release: app.change_screen("fx2")
+        GridLayout:
+            rows: 1
+            size_hint: 1, .05
+            pos_hint: {"top": .2, "right": 1}
+            Label:
+                color: (1,1,1,1)
+                font_size:34
+                id: trans_alga_label
+            TextInput:
+                size_hint: 1.5, 1
+                pos_hint: {"top": .15, "right": 1.2}
+                hint_text: "inicial (cm)"
+                id: trans_fx3_sup
+                on_text:
+                    self.background_color = (1,1,1,1)
+            TextInput:
+                size_hint: 1.5, 1
+                pos_hint: {"top": .15, "right": 1.2}
+                hint_text: "final (cm)"
+                id: trans_fx3_inf
+                on_text:
+                    self.background_color = (1,1,1,1)
+            ImageButton:
+                id:camera
+                source:"figs/camera.png"
+                size_hint: 1, 1
+                pos_hint: {"top": .15, "right" :1 }
+                #on_press: self.color = (0,0,0,1)
+                on_press:root.change_fx('faixa03')
+                on_release: app.change_screen("camera01")
+            ImageButton:
+                id:conta
+                source:"figs/contagem.png"
+                size_hint: 1, 1
+                pos_hint: {"top": .15, "right" :1 }
+                #on_press: self.color = (0,0,0,1)
+                on_release: app.change_screen("fx3")
+
+        Label:
+            id: trans_msgok
+            color: (0,1,0,1)
+            font_size:50
+            size_hint: .5, .1
+            pos_hint: {"top": .17, "right": .7}
+
+        LabelButton:
+            text: "[u]Voltar[/u]"
+            canvas.before:
+                Color:
+                    rgba: 0.531,0.5546,0.6172,0.7
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            size_hint: .5, .1
+            pos_hint: {"top": .1, "right": .4}
+            markup: True
+            on_release:root.manager.current = root.manager.previous()
+        LabelButton:
+            id: add_trans
+            text: "[u]Salvar Transecto[/u]"
+            canvas.before:
+                Color:
+                    rgba: 0.531,0.5546,0.6172,0.7
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            size_hint: .5, .1
+            pos_hint: {"top": .1, "right": .7}
+            markup: True
+            color: (0,0,1,1)
+            on_press: root.add_firebase()
+            on_release: root.reset()
+            on_release: root.change_trans()
+        LabelButton:
+            text: "[u]Finalizar[/u]"
+            canvas.before:
+                Color:
+                    rgba: 0.531,0.5546,0.6172,0.7
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            size_hint: .5, .1
+            pos_hint: {"top": .1, "right": 1.1}
+            markup: True
+            on_press: root.add_firebase()
+            #on_press: root.send_photo()
+
+            on_release:app.change_screen('final')

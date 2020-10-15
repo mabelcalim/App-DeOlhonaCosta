@@ -1,0 +1,85 @@
+#:import sys sys
+#:import MapSource mapview.MapSource
+<LocalColeta>:
+    FloatLayout:
+        canvas:
+
+            Color:
+                rgba: 0.531,0.5546,0.6172,1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        pos_hint: {"top": 0.899, "left": 1}
+        Label:
+            id:local
+            font_size:34
+        MapView:
+            id : localview
+            lat: -23.9737785
+            lon: -46.3525725
+            zoom: 12
+            map_source: MapSource(sys.argv[1], attribution="") if len(sys.argv) > 1 else "osm"
+            MapMarkerPopup:
+                id: latlng
+                lat: root.lat   #-23.9737785
+                lon: root.lon   #-46.3525725
+                popup_size: dp(230), dp(130)
+
+                Bubble:
+                    BoxLayout:
+                        orientation: "horizontal"
+                        padding: "5dp"
+                        Label:
+                            id: local_mark
+                            markup: True
+                            halign: "center"
+                        Label:
+                            id: coleta_mark
+                            markup: True
+                            halign: "center"
+
+
+        TextInput:
+            id: local_input
+            hint_text: "ex. Ilha de Urubuqueçaba ou Santos, SP"
+            size_hint: .8, .1
+            pos_hint: {"top": .97, "right" :.9}
+
+        Label:
+            id:local_msg
+            color: (1,0,0,1)
+            font_size:50
+            size_hint: .8, .1
+            pos_hint: {"top": .3, "right": .9}
+            #text: 'TEXT'
+
+        ImageButton:
+            source: "figs/meu_mapa.png"
+            size_hint: 0.5, .1
+            on_release: root.search()
+            pos_hint: {"top": .97, "right" :1.15}
+
+        LabelButton:
+            text: "[u]Voltar[/u]"
+            canvas.before:
+                Color:
+                    rgba: 0.531,0.5546,0.6172,0.7
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            size_hint: .5, .1
+            pos_hint: {"top": .2, "right": .4}
+            markup: True
+            on_release:root.manager.current = root.manager.previous()
+        LabelButton:
+            text: "[u]IR[/u]"
+            canvas.before:
+                Color:
+                    rgba: 0.531,0.5546,0.6172,0.7
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            size_hint: .5, .1
+            pos_hint: {"top": .2, "right": 1.1}
+            markup: True
+            on_release:root.change_screen() #app.root.current = root.manager.next()

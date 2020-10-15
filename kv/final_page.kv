@@ -1,0 +1,56 @@
+<Final>:
+    canvas:
+        Color:
+            rgba: 0.531,0.5546,0.6172,1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    FloatLayout:
+        MapView:
+            id:mapview
+            lat: -23.9648
+            lon: -46.3236
+            zoom: 4
+            map_source: MapSource(sys.argv[1], attribution="") if len(sys.argv) > 1 else "osm"
+            double_tap_zoom: True
+            MapMarker:
+                id:mapmarker1
+                lat:root.lat    #-23.9737785
+                lon:root.lon    #-46.3525725
+                #source:'figs/meumapa_agora1.png'
+            MapMarkerPopup:
+                id: final_popup
+                lat: root.lat
+                lon: root.lon
+                popup_size: dp(230), dp(130)
+                Bubble:
+                    BoxLayout:
+                        orientation: "horizontal"
+                        padding: "5dp"
+                        Label:
+                            id: final_popup_mark
+                            markup: True
+                            halign: "center"
+
+    BoxLayout:
+        orientation:'horizontal'
+        padding:15
+        spacing:20
+        ToggleButton:
+            text: 'RESULTADO'
+            size_hint_y: None
+            height: '40dp'
+            on_release: root.mapa()
+        ToggleButton:
+            text: '+ 1 COLETA'
+            size_hint_y: None
+            height: '40dp'
+            on_press: root.nova_coleta()
+            on_release: app.change_screen("localcoleta")
+        ToggleButton:
+            text: "SAIR"
+            size_hint_y: None
+            height: '40dp'
+            #on_release:app.root.current =  root.manager.next()
+            on_release: app.stop()

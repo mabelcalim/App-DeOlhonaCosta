@@ -1,0 +1,75 @@
+#:kivy 1.9.1
+#:include kv/first_page.kv
+#:include kv/login_page.kv
+#:include kv/local_coleta.kv
+#:include kv/trans_page.kv
+#:include kv/camera_page.kv
+#:include kv/camera_check.kv
+#:include kv/fx1.kv
+#:include kv/fx2.kv
+#:include kv/fx3.kv
+#:include kv/final_page.kv
+#:import sys sys
+#:import MapSource mapview.MapSource
+
+GridLayout:
+    cols: 1
+    FloatLayout:
+        GridLayout:
+            canvas:
+                Color:
+                    rgba: 0.531,0.5546,0.6172,1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            rows: 1
+            pos_hint: {"top": 1, "left": 1}
+            size_hint: 1, .1
+            Image:
+                source: "figs/legec_logo2.png"
+                id: avatar_image
+                size_hint: 0.5, 0.7
+                pos_hint: {"top": 1, "right": 0.75}
+            Image:
+                source: "figs/craca_logo.png"
+                size_hint: 0.25,0.55
+                pos_hint: {"top": 1, "right": 0.45}
+            Image:
+                source: "figs/ostra_logo.png"
+                size_hint: 0.25, 0.55
+                pos_hint: {"top": 1, "right": 0.8}
+            Image:
+                size_hint: 0.25,0.55
+                source: "figs/alga_logo.png"
+
+        ScreenManager:
+            size_hint: 1, 0.899
+            pos_hint: {"top": .899, "left": 1}
+            id: screen_manager
+            LoginPage:
+                name: "login_screen"
+                id: login_screen
+            LocalColeta:
+                name: "localcoleta"
+                id: localcoleta
+            Trans:
+                name: "trans"
+                id: trans
+            Camera_page:
+                name:'camera01'
+                id:camera01
+            Camera_check:
+                name:'camera_check'
+                id:camera_check
+            Faixa1:
+                name:'fx1'
+                id:fx1
+            Faixa2:
+                name:'fx2'
+                id:fx2
+            Faixa3:
+                name:'fx3'
+                id:fx3
+            Final:
+                name:'final'
+                id:final

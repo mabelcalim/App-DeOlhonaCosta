@@ -1,0 +1,126 @@
+<LoginPage>:
+    GridLayout:
+        cols: 1
+        FloatLayout:
+            GridLayout:
+                canvas:
+                    Color:
+                        rgba: 0.531,0.5546,0.6172,1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                rows: 1
+                pos_hint: {"top": 1, "left": 1}
+                size_hint: 1, .1
+                Image:
+                    source: "figs/legec_logo2.png"
+                    id: avatar_image
+                    size_hint: 0.5, 0.7
+                    pos_hint: {"top": 1, "right": 0.75}
+                Image:
+                    source: "figs/craca_logo.png"
+                    size_hint: 0.25,0.55
+                    pos_hint: {"top": 1, "right": 0.45}
+                Image:
+                    source: "figs/ostra_logo.png"
+                    size_hint: 0.25, 0.55
+                    pos_hint: {"top": 1, "right": 0.8}
+                Image:
+                    size_hint: 0.25,0.55
+                    source: "figs/alga_logo.png"
+    FloatLayout:
+        canvas:
+            Color:
+                rgba: 0.531,0.5546,0.6172,1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        Label:
+            text: "Bem vindo cientista cidadão! "
+            color: (1,1,1,1)
+            size_hint: .8, .1
+            center_x: (root.width/2)
+            pos_hint: {"top": 1, "right" :.9}
+        LabelButton:
+            canvas.before:
+                Color:
+                    rgba: 0.531,0.5546,0.6172,1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            text: "[u]esqueci a senha![/u]"
+            markup: True
+            color: (1,.9,0,1)
+            size_hint: .8, .1
+            pos_hint: {"top": .9, "right" :1.1}
+            on_release: root.forgot_password(login_email)
+        TextInput:
+            id: login_email
+            hint_text: "email"
+            size_hint: .8, .1
+            pos_hint: {"top": .8, "right" :.9}
+        TextInput:
+            id: login_password
+            password: True
+            hint_text: "senha"
+            size_hint: .8, .1
+            pos_hint: {"top": .7, "right" :.9}
+        Label:
+            id: login_message
+            color: (1,0,0,1)
+            size_hint: .8, .1
+            pos_hint: {"top": .5, "right" :.9}
+        Label:
+            id: login_messageok
+            color: (0,0,1,1)
+            size_hint: .8, .1
+            pos_hint: {"top": .5, "right" :.9}
+        Label:
+            id: forget_passwd
+            color: (0,0,1,1)
+            size_hint: .8, .1
+            pos_hint: {"top": .5, "right" :.9}
+        LabelButton:
+            canvas.before:
+                Color:
+                    rgba: 0.531,0.5546,0.6172,1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            text: "[u]inscreva-se![/u]"
+            markup: True
+            color: (0,1,0,1)
+            size_hint: .8, .1
+            pos_hint: {"top": .6, "right" :.6}
+            on_release: root.add_user(login_email,login_password)
+
+        LabelButton:
+            canvas.before:
+                Color:
+                    rgba: 0.531,0.5546,0.6172,1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            text: "[u]já estou inscrito![/u]"
+            markup: True
+            color: (0,0,1,1)
+            size_hint: .8, .1
+            pos_hint: {"top": .599, "right" :1.1}
+            on_release: root.login_user(login_email,login_password)
+
+        GridLayout:
+            #  Menu buttons here
+            rows: 1
+            pos_hint: {"top": .15, "left": 1}
+            size_hint: 1, .15
+            #ImageButton:
+            #    source: "figs/meu_mapa.png"
+            #    on_release: root.draw_MapNow()  #root.MeuMapa()
+            ImageButton:
+                source: "figs/nova_coleta.png"
+                #on_release:app.change_screen('local)
+                on_release: root.change_screen()
+
+            #ImageButton:
+            #    source: "figs/settings.png"

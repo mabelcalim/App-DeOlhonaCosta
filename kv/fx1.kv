@@ -1,0 +1,109 @@
+<Faixa1>:
+    id:fx1
+    canvas:
+        Color:
+            rgba: 0.531,0.5546,0.6172,1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+
+    BoxLayout:
+        padding:1
+        spacing:1
+        size: self.size #600,1000 #300,500
+        orientation: 'vertical'
+        Image:
+            id: imageView
+            canvas.before:
+                Color:
+                    rgba: 0.531,0.5546,0.6172,0.7
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+    BoxLayout:
+        #spacing: 50,50
+        #padding: 60, 60
+        #size_hint_y: None
+        #height: self.minimum_height
+        #rows: 1
+        #size_hint: 1, .1
+        #pos_hint: {"top": 1.01, "right": 1}
+        #row_default_height: '10dp'
+        orientation:'vertical'
+        padding:15
+        spacing:20
+        ImageButton:
+            id:fx1_craca
+            source:"org/legec_craca.png"
+            size_hint: 0.1, 0.3
+            #pos_hint: {"top": .5, "right" :1.2 }
+            on_press: root.add_craca()
+            on_release: root.new_craca()
+        ImageButton:
+            id:fx1_ostra
+            source:"org/legec_ostra.png"
+            size_hint: 0.1, 0.3
+            #pos_hint: {"top": .5, "right" :1.2 }
+            on_press: root.add_ostra()
+            on_release: root.new_ostra()
+        ImageButton:
+            id:fx1_alga
+            source:"org/legec_alga.png"
+            size_hint: 0.1, 0.3
+            #pos_hint: {"top": .5, "right" :1.2 }
+            on_press: root.add_alga()
+            on_release: root.new_alga()
+        ImageButton:
+            id:fx1_rocha
+            source:"org/legec_rocha.png"
+            size_hint: 0.1, 0.3
+            #pos_hint: {"top": .5, "right" :1.2 }
+            on_press: root.add_RN()
+            on_release: root.new_rocha()
+
+    BoxLayout:
+        orientation:'horizontal'
+        padding:15
+        spacing:20
+        Label:
+            id:fx1_msg_error
+            color: (0,1,0,1)
+            font_size:50
+            size_hint: .5, .1
+            pos_hint: {"top": .17, "right": .8}
+    BoxLayout:
+        orientation:'horizontal'
+        padding:15
+        spacing:20
+        Button:
+            text: 'load'
+            size_hint_y: None
+            height: '40dp'
+            background_color: (0, 0, 0, 1)
+            on_release:root.load_image()
+        Button:
+            text: 'apagar'
+            size_hint_y: None
+            height: '40dp'
+            background_color: (0.5, 0, 0, 1)
+            on_release:root.undo()
+        Button:
+            text: 'SALVAR/VOLTAR'
+            size_hint_y: None
+            height: '40dp'
+            on_press: root.salvar()
+            on_press: root.add_firebase()
+            on_release: root.reset()
+            on_release:app.change_screen("trans")
+
+
+
+        Label:
+            id: sumT
+            text: "0"
+            font_size: 70
+            size_hint:None,None
+            width: self.height
+            color: [1,1,1,1]
