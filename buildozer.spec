@@ -4,10 +4,10 @@
 title = DeOlhoNaCosta-app
 
 # (str) Package name
-package.name = DeOlhoNaCosta
+package.name = deolhonacosta
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.unifesp
+package.domain = cienciacidada.eco.br
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -16,10 +16,10 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,p
 
 # (list) List of inclusions using pattern matching
-source.include_patterns = fotos/*,kv/*,org/*.png,figs/*.png,cache/*.png,LaunchImages/*.png,fotos/*.png
+source.include_patterns = fotos/*,kv/*,org/*.png,figs/*.png,cache/*.png,LaunchImages/*,fotos/*.png
 
 # (list) Source files to exclude (let empty to not exclude anything)
-source.exclude_exts = spec, .DS_Store
+source.exclude_exts = spec, .DS_Store, xml
 
 # (list) List of directory to exclude (let empty to not exclude anything)
 source.exclude_dirs = tests, bin, maps
@@ -36,7 +36,7 @@ version = 0.0.1.7
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,requests,googlemaps,android,openssl,pyjnius
+requirements = python3,kivy,requests,googlemaps,android,openssl,urllib3,chardet,idna,pyjnius,plyer
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -98,7 +98,7 @@ android.api = 29
 #android.sdk = 20
 
 # (str) Android NDK version to use
-android.ndk = 21d
+#android.ndk = 19b
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
 #android.ndk_api = 21
@@ -107,10 +107,10 @@ android.ndk = 21d
 #android.private_storage = True
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
-#android.ndk_path =
+#android.ndk_path =/home/mabel/code/android-ndk-r21
 
 # (str) Android SDK directory (if empty, it will be automatically downloaded.)
-#android.sdk_path =/home/mabel/code/SDK
+android.sdk_path =/home/mabel/code/SDK
 
 # (str) ANT directory (if empty, it will be automatically downloaded.)
 #android.ant_path =
@@ -213,7 +213,7 @@ android.arch = armeabi-v7a
 #p4a.branch = master
 
 # (str) python-for-android git clone directory (if empty, it will be automatically cloned from github)
-#p4a.source_dir =
+#p4a.source_dir = /home/mabel/code/python-for-android
 
 # (str) The directory in which python-for-android should look for your own build recipes (if any)
 #p4a.local_recipes =
