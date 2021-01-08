@@ -6,22 +6,23 @@
         Rectangle:
             size: self.size
             pos: self.pos
-    BoxLayout:
-        orientation:'vertical'
-        size: root.size
-        Camera:
-            id: camera
-            allow_stretch: True
-            resolution: (640,480) #(1280,960) #(1920,1080) #(1280,960)  #(640,480)  #self.resolution # (750,1334)
-            keep_ratio: True
-            play:True
-            canvas.before:
-                PushMatrix
-                Rotate:
-                    angle:270
-                    origin:self.center
-            canvas.after:
-                PopMatrix
+
+    orientation:'vertical'
+    size: root.size
+    Camera:
+        id: camera
+        allow_stretch: True
+        resolution: (640,480) #(720,1280) #(1920,1080) #(1280,960)  #(640,480)  #self.resolution # (750,1334)
+        keep_ratio: True
+        play:True
+        index:0
+        canvas.before:
+            PushMatrix
+            Rotate:
+                angle:270
+                origin:self.center
+        canvas.after:
+            PopMatrix
     BoxLayout:
         padding:15 #150
         spacing:20  #5
@@ -44,7 +45,7 @@
             on_press: root.capture()
             on_release:app.change_screen("camera_check")
         ToggleButton:
-            text: "Retornar ao Transecto"
+            text: "Retornar"
             size_hint_y: None
             #pos_hint: {"bottom": .5, "right": .5}
             #pos_hint: {"top": .05, "right": .8}
