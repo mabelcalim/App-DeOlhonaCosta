@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Mabel'
 
-__version__ = '0.0.1.7'
+__version__ = '0.0.04'
 '''LEGEC App
    escrito por: Mabel Calim Costa
-   data: MAR/2019 - OUT/2020
+   data: MAR/2019 - OUT/2019
    DRAFT8
  camera Ok
  sumT Ok
@@ -50,6 +50,10 @@ from kivy.garden.mapview import MapView,MapMarker
 from kivy.properties import NumericProperty
 import pickle
 from kivy.utils import platform
+from kivy.utils import platform
+from kivy.clock import mainthread
+from kivy.logger import Logger
+
 #from android.permissions import request_permissions, Permission
 #request_permissions([Permission.CAMERA])
 
@@ -58,6 +62,45 @@ from kivy.utils import platform
 #gi.require_version('Gst','1.0')
 #from android.permissions import request_permission, Permission
 #request_permission(Permission.CAMERA)
+
+def is_android():
+    return platform == 'android'
+
+'''
+Runtime permissions:
+'''
+
+def check_camera_permission():
+    """
+    Android runtime `CAMERA` permission check.
+    """
+    if not is_android():
+        return True
+    from android.permissions import Permission, check_permission
+    permission = Permission.CAMERA
+    return check_permission(permission)
+
+def check_request_camera_permission(callback=None):
+    """
+    Android runtime `CAMERA` permission check & request.
+    """
+    had_permission = check_camera_permission()
+    Logger.info("CameraAndroid: CAMERA permission {%s}.", had_permission)
+    if not had_permission:
+        Logger.info("CameraAndroid: CAMERA permission was denied.")
+        Logger.info("CameraAndroid: Requesting CAMERA permission.")
+        from android.permissions import Permission, request_permissions
+        permissions = [Permission.CAMERA]
+        #permissions = [Permission.WRITE_EXTERNAL_STORAGE]
+        request_permissions(permissions, callback)
+        had_permission = check_camera_permission()
+        Logger.info("CameraAndroid: Returned CAMERA permission {%s}.", had_permission)
+    else:
+        Logger.info("CameraAndroid: Camera permission granted.")
+    return had_permission
+
+# -- camera permission
+
 
 from kivy.uix.checkbox import CheckBox
 
@@ -141,7 +184,7 @@ class LoginPage(Screen):
         if os.path.exists(path+"/localId.p") == True:
             os.remove(path+"/localId.p")
         #bd = firebase.FirebaseApplication('https://deolhonacosta-2019.firebaseio.com', None)
-        wak = '' #senha google firebase
+        wak = ''
         signup_url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + wak
         #print (login_email.text, login_password.text)
         signup_payload = {"email": login_email.text, "password": login_password.text, "returnSecureToken": True}
@@ -202,7 +245,7 @@ class LoginPage(Screen):
             if os.path.exists(path+"/localId.p") == True:
                 os.remove(path+"/localId.p")
             check_user = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword"
-            wak = ''# coloque aqui senha do google firebase
+            wak = ''
             url = "%s?key=%s" % (check_user,wak)
             data = {"email": login_email.text,
                 "password": login_password.text,
@@ -265,7 +308,7 @@ class LoginPage(Screen):
 
     def forgot_password(self,login_email):
             path = str(os.path.abspath(os.path.dirname(__file__)))
-            wak = '' #coloque aqui senha do google firebase
+            wak = ''
             password_reset = "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" + wak
             signup = {"requestType":"PASSWORD_RESET","email":login_email.text}
             post_psw = requests.post(password_reset,data=signup)
@@ -341,7 +384,7 @@ class LocalColeta(Screen):
         #gkeys = f.readlines()
         #print (str(gkeys[0]))
         #gmaps = googlemaps.Client(key=str(gkeys[0]))
-        gmaps = googlemaps.Client(key='') #senha googlemaps API
+        gmaps = googlemaps.Client(key='AIzaSyBJr_ugFiYc1uniNHaCbMMgEsCxA9gntPs')
         geocode_result = gmaps.geocode("%s"%self.ids['local_input'].text)
         ind_local = self.ids['local']
         ind_local.text = str(geocode_result[0]['geometry']['location'])
@@ -499,8 +542,8 @@ class Trans(Screen):
         self.ids['trans_msgok'].color = 0,0,1,1
         self.ids['trans_msgok'].text = 'enviando fotos para email do projeto ... '
         msg = MIMEMultipart()
-        username = 'projetodeolhonacosta@gmail.com'
-        password =  'C13nc1@c1d@d@'
+        username = ''
+        password =  ''
         user_email = pickle.load( open( path+ "/login_email.p", "rb" ) )
         id_coleta = pickle.load( open( path+ "/id_coleta.p", "rb" ) )
         lat = pickle.load( open( path+ "/LAT.p", "rb" ) )
@@ -563,6 +606,12 @@ class Camera_page(Screen):
     def reset (self):
         self.ids['msg_error'].text = ''
 
+    def first_capture(self):
+        camera=self.ids['camera']
+        print (camera.resolution)
+        camera.resolution=[640,480]
+        return
+
     def capture(self):
         '''
         Function to capture the images and give them the names
@@ -577,7 +626,9 @@ class Camera_page(Screen):
         global name_trans
         global name_fx
         import os
-
+        camera=self.ids['camera']
+        print (camera.resolution)
+        camera.resolution=[640,480]
 
         #if name_trans is not None and  name_fx  is not None  :
         try:
@@ -722,7 +773,7 @@ class Faixa1(Screen):
                 for x in range(1):
                     #self.rect = Rectangle(pos = self.center,size=(self.width/2.,self.height/2.))
                     self.obj = InstructionGroup()
-                    self.c =Circle_C(pos = (300,800),size = (50,50))
+                    self.c =Circle_C(pos = (300,1200),size = (50,50))
                     self.add_widget(self.c)
                     self.obj.add(Color(1,0.8,0,1))
                     self.objects.append(self.obj)
@@ -746,7 +797,7 @@ class Faixa1(Screen):
             with self.canvas:
                 for x in range(1):
                     self.obj = InstructionGroup()
-                    self.o =Circle_C(pos = (400,800),size = (50,50))
+                    self.o =Circle_C(pos = (300,1000),size = (50,50))
                     self.add_widget(self.o)
                     self.obj.add(Color(0.5,0,0.5,0.7))
                     self.objects.append(self.obj)
@@ -770,7 +821,7 @@ class Faixa1(Screen):
             with self.canvas:
                 for x in range(1):
                     self.obj = InstructionGroup()
-                    self.a =Circle_C(pos = (500,800),size = (50,50))
+                    self.a =Circle_C(pos = (300,800),size = (50,50))
                     self.add_widget(self.a)
                     self.obj.add(Color(0,1,0,0.7))
                     self.objects.append(self.obj)
@@ -794,7 +845,7 @@ class Faixa1(Screen):
             with self.canvas:
                 for x in range(count):
                     self.obj = InstructionGroup()
-                    self.r =Circle_C(pos = (600,800),size = (50,50))
+                    self.r =Circle_C(pos = (300,600),size = (50,50))
                     self.add_widget(self.r)
                     self.obj.add(Color(1,1,1,0.7))
                     self.objects.append(self.obj)
@@ -972,7 +1023,7 @@ class Faixa2(Screen):
             with self.canvas:
                 for x in range(1):
                     self.obj = InstructionGroup()
-                    self.c =Circle_C(pos = (300,800),size = (50,50))
+                    self.c =Circle_C(pos = (300,1200),size = (50,50))
                     self.add_widget(self.c)
                     self.obj.add(Color(1,0.8,0,1))
                     self.objects.append(self.obj)
@@ -996,7 +1047,7 @@ class Faixa2(Screen):
             with self.canvas:
                 for x in range(1):
                     self.obj = InstructionGroup()
-                    self.o =Circle_C(pos = (400,800),size = (50,50))
+                    self.o =Circle_C(pos = (300,1000),size = (50,50))
                     self.add_widget(self.o)
                     self.obj.add(Color(0.5,0,0.5,0.7))
                     self.objects.append(self.obj)
@@ -1020,7 +1071,7 @@ class Faixa2(Screen):
             with self.canvas:
                 for x in range(1):
                     self.obj = InstructionGroup()
-                    self.a =Circle_C(pos = (500,800),size = (50,50))
+                    self.a =Circle_C(pos = (300,800),size = (50,50))
                     self.add_widget(self.a)
                     self.obj.add(Color(0,1,0,0.7))
                     self.objects.append(self.obj)
@@ -1044,7 +1095,7 @@ class Faixa2(Screen):
             with self.canvas:
                 for x in range(count):
                     self.obj = InstructionGroup()
-                    self.r =Circle_C(pos = (600,800),size = (50,50))
+                    self.r =Circle_C(pos = (300,600),size = (50,50))
                     self.add_widget(self.r)
                     self.obj.add(Color(1,1,1,0.7))
                     self.objects.append(self.obj)
@@ -1224,7 +1275,7 @@ class Faixa3(Screen):
             with self.canvas:
                 for x in range(1):
                     self.obj = InstructionGroup()
-                    self.c =Circle_C(pos = (300,800),size = (50,50))
+                    self.c =Circle_C(pos = (300,1200),size = (50,50))
                     self.add_widget(self.c)
                     self.obj.add(Color(1,0.8,0,1))
                     self.objects.append(self.obj)
@@ -1248,7 +1299,7 @@ class Faixa3(Screen):
             with self.canvas:
                 for x in range(1):
                     self.obj = InstructionGroup()
-                    self.o =Circle_C(pos = (400,800),size = (50,50))
+                    self.o =Circle_C(pos = (300,1000),size = (50,50))
                     self.add_widget(self.o)
                     self.obj.add(Color(0.5,0,0.5,0.7))
                     self.objects.append(self.obj)
@@ -1272,7 +1323,7 @@ class Faixa3(Screen):
             with self.canvas:
                 for x in range(1):
                     self.obj = InstructionGroup()
-                    self.a =Circle_C(pos = (500,800),size = (50,50))
+                    self.a =Circle_C(pos = (300,800),size = (50,50))
                     self.add_widget(self.a)
                     self.obj.add(Color(0,1,0,0.7))
                     self.objects.append(self.obj)
@@ -1296,7 +1347,7 @@ class Faixa3(Screen):
             with self.canvas:
                 for x in range(count):
                     self.obj = InstructionGroup()
-                    self.r =Circle_C(pos = (600,800),size = (50,50))
+                    self.r =Circle_C(pos = (300,600),size = (50,50))
                     self.add_widget(self.r)
                     self.obj.add(Color(1,1,1,0.7))
                     self.objects.append(self.obj)
@@ -1452,17 +1503,90 @@ class LegecApp(App):
     #url = 'https://deolhonacosta-2019.firebaseio.com'
     #rm no dir data
 
+    def is_android():
+        return platform == 'android'
+    def check_camera_permission():
+        """
+        Android runtime `CAMERA` permission check.
+        """
+        if not is_android():
+            return True
+        from android.permissions import Permission, check_permission
+        permission = Permission.CAMERA
+        return check_permission(permission)
+    def check_request_camera_permission(callback=None):
+        """
+        Android runtime `CAMERA` permission check & request.
+        """
+        had_permission = check_camera_permission()
+        if not had_permission:
+            from android.permissions import Permission, request_permissions
+            permissions = [Permission.CAMERA]
+            request_permissions(permissions, callback)
+        return had_permission
+    #def request_android_permissions(self):
+    #    """
+    #    Since API 23, Android requires permission to be requested at runtime.
+    #    This function requests permission and handles the response via a
+    #    callback.
+
+    #    The request will produce a popup if permissions have not already been
+    #    been granted, otherwise it will do nothing.
+    #    """
+    #    from android.permissions import request_permissions, Permission
+    #
+    #    def callback(permissions, results):
+    #        """
+    #        Defines the callback to be fired when runtime permission
+    #        has been granted or denied. This is not strictly required,
+    #        but added for the sake of completeness.
+    #        """
+    #        if all([res for res in results]):
+    #            print("callback. All permissions granted.")
+    #        else:
+    #            print("callback. Some permissions refused.")
+
+    #    request_permissions([Permission.CAMERA], callback)
 
     def build(self):
         self.icon = 'figs/legec_logo.png'
         self.title = 'deolhonacosta-2019'
         #from android.permissions import request_permission,Permission
-        return GUI
+        #request_permission(Permission.CAMERA)
+        #path = str(os.path.abspath(os.path.dirname(__file__)))
+        #self.load_kv(path + '/main.kv')
+        #if not platform == 'android':
+        #    return True
+        #from android.permissions import request_permission, Permission
+        #request_permission(Permission.CAMERA)
+        #Clock.schedule_once(Camera_page, 10)
+        #return GUI
+        @mainthread
+        def on_permissions_callback(permissions, grant_results):
+
+            if all(grant_results):
+                return GUI
+
+
+        if check_request_camera_permission(callback=on_permissions_callback):
+            return GUI
+        else:
+            #Clock.schedule_interval(self.update,1)
+            #return Builder.load_string(perm_denied)
+            from android.permissions import request_permission, Permission
+            request_permission(Permission.CAMERA)
+            #cam = Camera_page()
+            return GUI
+
+    def update(self,dt):
+        self.root.canvas.ask_update()
 
     def change_screen(self, screen_name):
         screen_manager = self.root.ids['screen_manager']
         screen_manager.current = screen_name
 
+    #def is_android():
+    #    return platform == 'android'
 
 
 

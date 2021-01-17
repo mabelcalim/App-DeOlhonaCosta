@@ -6,17 +6,18 @@
         Rectangle:
             size: self.size
             pos: self.pos
-
+    Image:
+        id: imageView
+        source:"figs/legec_logo2.png"
+        pos_hint: {"top": 1, "right": 1}
     BoxLayout:
         #padding:1 #150
         #spacing:1  #5
         size: self.size   #300,500 #100
         orientation: 'vertical'
-
         Image:
-            id: imageView
-            source:"figs/legec_logo2.png"
-            pos_hint: {"top": 1, "right": 1}
+            pos_hint:{"top": 1, "right": 1}
+
         ToggleButton:
             text: 'Ver foto'
             size_hint_y: None

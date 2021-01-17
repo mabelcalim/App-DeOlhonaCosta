@@ -12,9 +12,9 @@
     Camera:
         id: camera
         allow_stretch: True
-        resolution: (640,480) #(720,1280) #(1920,1080) #(1280,960)  #(640,480)  #self.resolution # (750,1334)
+        resolution: self.resolution #(640,480) #(1280,960) #(1920,1080) #(1280,960)  #(640,480)  #self.resolution # (750,1334)
         keep_ratio: True
-        play:True
+        play:False
         index:0
         canvas.before:
             PushMatrix
@@ -35,8 +35,8 @@
         #    #size_hint: .5, 1
             pos_hint: {"bottom": .5, "right": .5}
             height: '50dp'
-            #on_press:camera.play = not camera.play
-            #on_press:root.capture()
+            on_press:camera.play = not camera.play
+            on_press:root.first_capture()
             #on_release:app.change_screen("camera_check")
         ToggleButton:
             text: 'Capturar'
