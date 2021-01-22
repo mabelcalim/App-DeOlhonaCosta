@@ -10,6 +10,7 @@ An app for monitoring biodiversity linked to a database
 Installing apk 
 ============
 
+[Release 1.0.0] (https://github.com/mabelcalim/App-DeOlhonaCosta/releases/tag/v1.0.0) 
 Download from bin/DeOlhonaCosta_version.apk
 
 Google Play Store 
