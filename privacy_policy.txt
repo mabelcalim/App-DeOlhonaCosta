@@ -1,0 +1,8 @@
+This app aims to engage the citizen scientist to create a database about your perception and identification of biodiversity in coastal regions.
+
+To do so:
+* This app requires a username and password to access the database just to identify the user about their history of collections in citizen science project.
+* This app accesses the camera to capture and identify biodiversity in coastal regions.
+* This information is collect in a database only for academic aims.
+
+No personal information is collected by the app, or transmitted in any other way.
